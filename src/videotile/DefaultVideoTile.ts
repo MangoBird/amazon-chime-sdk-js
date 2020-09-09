@@ -181,6 +181,19 @@ export default class DefaultVideoTile implements DevicePixelRatioObserver, Video
 
   bindVideoElement(videoElement: HTMLVideoElement | null): void {
     let tileUpdated = false;
+    // If videoElement is null, we are doing an unbinding
+    if (videoElement === null) {
+      DefaultVideoTile.disconnectVideoStreamFromVideoElement(
+        this.tileState.boundVideoElement,
+        false
+      );
+      this.tileState.boundVideoElement = videoElement;
+      this.tileState.videoElementCSSWidthPixels = null;
+      this.tileState.videoElementCSSHeightPixels = null;
+      this.tileState.videoElementPhysicalWidthPixels = null;
+      this.tileState.videoElementPhysicalHeightPixels = null;
+      this.tileState.active = false;
+    }
     if (this.tileState.boundVideoElement !== videoElement) {
       this.tileState.boundVideoElement = videoElement;
       tileUpdated = true;
@@ -194,9 +207,6 @@ export default class DefaultVideoTile implements DevicePixelRatioObserver, Video
         this.tileState.videoElementCSSHeightPixels = videoElement.clientHeight;
         tileUpdated = true;
       }
-    } else {
-      this.tileState.videoElementCSSWidthPixels = null;
-      this.tileState.videoElementCSSHeightPixels = null;
     }
     if (tileUpdated) {
       this.sendTileStateUpdate();
