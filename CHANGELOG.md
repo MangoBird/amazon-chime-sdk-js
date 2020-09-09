@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.17.2] - 2020-09-08
 ### Added
+- Added meetings tags to serverless demo
 
 ### Changed
 
